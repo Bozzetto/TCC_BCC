@@ -1,32 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Proposta do TCC</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: left;
-            padding-top: 50px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TCC - Treinamento de Redes Neurais com precisão mista</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+    }
+    header {
+      background-color: #003366;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    nav {
+      background-color: #005599;
+      color: white;
+      text-align: center;
+      padding: 0.75rem;
+    }
+    nav a {
+      color: white;
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    section {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+      background-color: white;
+      margin-top: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #003366;
+      color: white;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 <body>
-    <h1>Estudo sobre Treinamento de Redes Neurais utilizando Precisão Mista</h1>
-    <p><b>Descrição:</b> Este projeto tem como objetivo estudar e aplicar técnicas de treinamento de redes neurais utilizando precisão mista, uma abordagem que combina diferentes formatos numéricos, como float16 e float32, durante o processo de treinamento de modelos de aprendizado profundo. A proposta busca avaliar os ganhos de desempenho e eficiência computacional proporcionados por essa técnica, e o efeito sobre a acurácia final do modelo. </p>
 
-    <p> O trabalho envolve o desenvolvimento e comparação de modelos treinados com precisão total e mista, utilizando frameworks como PyTorch, OpenCV, além de explorar ferramentas para facilitar a implementação em precisão mista. Serão realizados experimentos com datasets públicos a fim de medir o tempo de treinamento, consumo de memória GPU e desempenho do modelo. </p>
-    </br>
-    <b>Objetivos:</b>     
+  <header>
+    <h1>Treinamento com Precisão Mista</h1>
+    <p>Treinamento de Redes Neurais utilizando float16, bfloat16 e int8</p>
+  </header>
+
+  <nav>
+    <a href="#resumo">Resumo</a>
+    <a href="#objetivos">Objetivos</a>
+    <a href="#metodologia">Metodologia</a>
+    <a href="#resultados">Resultados Esperados</a>
+    <a href="#contato">Contato</a>
+  </nav>
+
+  <section id="resumo">
+    <h2>Resumo</h2>
+    <p>Este trabalho investiga como diferentes representações numéricas podem influenciar o desempenho no treinamento de modelos de redes neurais profundas.</p>
+    <p> A proposta é analisar estratégias que utilizam menos precisão nos cálculos com o objetivo de reduzir o consumo de memória e acelerar o processo de aprendizagem, sem comprometer a qualidade dos resultados. Para isso, serão conduzidos experimentos comparativos entre abordagens que utilizam precisões variadas, avaliando o impacto em métricas como tempo de treinamento, uso de recursos computacionais e acurácia dos modelos.</p>
+  </section>
+
+  <section id="objetivos">
+    <h2>Objetivos</h2>
     <ul>
-        <li>Implementar modelos utilizando frameworks compatíveis com precisão mista.</li>
-        <li>Comparar o desempenho (tempo de treinamento, uso de GPU, consumo de memória) entre modelos com precisão total e mista.</li>
-        <li>Avaliar a acurácia e estabilidade dos modelos treinados em ambos os formatos.</li>
+        <li>Implementar técnicas de treinamento de redes neurais com precisão mista.</li> 
+	<li>Mensurar o impacto dessas técnicas na performance computacional.</li> 
+	<li>Comparar o desempenho entre diferentes frameworks e códigos-fonte.</li> 
+	<li>Analisar o comportamento das métricas de erro com uso de precisão meia.</li>
     </ul>
+  </section>
+
+  <section id="metodologia">
+    <h2>Metodologia</h2>
+    <p>A metodologia deste trabalho combina experimentação prática e análise comparativa para investigar os efeitos do uso de diferentes níveis de precisão numérica no treinamento de modelos de redes neurais profundas. O estudo será conduzido com modelos representativos de tarefas de classificação e geração, treinados sob três configurações distintas: meia precisão (FP16), precisão mista (FP16 + FP32) e precisão simples (FP32).</p>
+
+    <p>Os experimentos serão realizados em ambiente controlado, utilizando ferramentas de aprendizado profundo compatíveis com diferentes níveis de precisão, e aproveitando aceleração por hardware quando disponível. Caso o tempo permita, pretende-se ainda realizar testes em plataformas alternativas de execução para verificar eventuais variações.</p>
+
+    <p>As métricas consideradas na análise incluem tempo total de treinamento, consumo de memória durante o processo e desempenho final do modelo, medido por acurácia ou outra métrica adequada à tarefa. Os modelos serão treinados sobre um conjunto de dados padronizado e relevante para o contexto, garantindo comparabilidade entre os resultados.</p>
+
+    <p>Para assegurar validade estatística, cada experimento será repetido múltiplas vezes, e os resultados serão analisados de forma comparativa. Essa abordagem busca identificar quais configurações de precisão oferecem o melhor equilíbrio entre eficiência computacional e desempenho do modelo treinado.</p>
+  </section>
+
+  <section id="resultados">
+    <h2>Resultados Esperados</h2>
+    <p>Espera-se que o uso de precisões reduzidas, como a meia precisão e a precisão mista, resulte em uma diminuição significativa do consumo de memória e do tempo de treinamento dos modelos, quando comparadas à precisão simples. Acredita-se que, especialmente no caso da precisão mista, esses ganhos de eficiência possam ser obtidos sem perdas relevantes na acurácia dos modelos, mantendo a qualidade do aprendizado próxima ao padrão tradicional.</p>
+
+    <p>Além disso, espera-se observar que o impacto dessas técnicas varia de acordo com a arquitetura do modelo e a tarefa envolvida. Modelos mais complexos ou sensíveis numericamente, como os de geração adversária (GANs), podem ser mais afetados pela redução de precisão, enquanto modelos mais estáveis, como os de classificação, tendem a manter o desempenho mesmo com precisões menores.</p>
+
+    <p>Outro resultado esperado é a identificação de quais frameworks e implementações oferecem melhor suporte e estabilidade para o uso de diferentes precisões, contribuindo para orientar futuras aplicações práticas dessas técnicas.</p>
+
+    <p>Por fim, espera-se que os resultados confirmem a viabilidade do uso de precisão reduzida como uma estratégia eficiente para otimizar o treinamento de redes neurais em ambientes com recursos limitados, como GPUs com menor capacidade de memória ou sistemas embarcados.</p>
+  </section>
+
+  <section id="contato">
+    <h2>Contato</h2>
+    <p><strong>Nome:</strong> Leonardo Bozzetto</p>
+    <p><strong>Email:</strong> leobozzetto(at)usp(dot)com(dot)br</p>
+    <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/leonardo-bozzetto" target="_blank">linkedin.com/in/leonardo-bozzetto</a></p>
+    <p><strong>Universidade:</strong> Universidade de São Paulo (USP)</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Leonardo Bozzetto — TCC de Bacharelado em Ciência da Computação</p>
+  </footer>
+
 </body>
 </html>
