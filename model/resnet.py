@@ -9,48 +9,59 @@ from utils import ModelConfig
 
 class Residual(nn.Module):
     
-    def __init__(self, conv_channels, use_1x1conv, strides = 1):
+    def __init__(self, conv_channels, dimension_expansion, use_1x1conv = False, first_stride = 1):
         super().__init__()
         
-        if use_1x1conv:
+        if dimension_expansion:
             self.direct_conn = nn.Sequential(
-                nn.LazyConv2d(conv_channels, kernel_size = 1, padding = 1),
+                nn.LazyConv2d(conv_channels, kernel_size = 1, stride = first_stride),
                 nn.LazyBatchNorm2d(),
                 nn.ReLU(),
                 nn.LazyConv2d(conv_channels, kernel_size = 3, padding = 1),
                 nn.LazyBatchNorm2d(),
                 nn.ReLU(),
-                nn.LazyConv2d(4*conv_channels, kernel_size = 1, padding = 1),
+                nn.LazyConv2d(4*conv_channels, kernel_size = 1),
                 nn.LazyBatchNorm2d()
             )
-            self.residual_conn = nn.LazyConv2d(4*conv_channels, kernel_size = 1, padding = 1)
 
         else:
             self.direct_conn = nn.Sequential(
-                nn.LazyConv2d(conv_channels, kernel_size = 3, padding = 1),
+                nn.LazyConv2d(conv_channels, kernel_size = 3, stride = first_stride, padding = 1),
                 nn.LazyBatchNorm2d(),
                 nn.ReLU(),
                 nn.LazyConv2d(conv_channels, kernel_size = 3, padding = 1),
                 nn.LazyBatchNorm2d(),
             )
 
-            self.residual_conn = nn.LazyConv2d(conv_channels, kernel_size = 1, padding = 1) 
+        if use_1x1conv:
+            shortcut_channels = conv_channels
+            if dimension_expansion:
+                shortcut_channels *= 4 
+            
+            self.residual_conn = nn.Sequential(
+                nn.LazyConv2d(shortcut_channels, kernel_size = 1, stride = first_stride),
+                nn.LazyBatchNorm2d()
+            )
+        else:
+            self.residual_conn = lambda x : x
 
     def forward(self, x):
         y = self.direct_conn(x)
-        #x = self.residual_conn(x)
+        x = self.residual_conn(x) 
         y += x
-        return nn.ReLU(y)
+        return nn.functional.relu(y)
 
 class ResNet(nn.Module):
 
     def __init__(self, model_config: ModelConfig):
         super().__init__()
 
-        def residual_block(num_residual, conv_channels, use_1x1conv = False):
+        def residual_block(num_residual, conv_channels, dimension_expansion = False, stride = 2):
             layers = []
-            for _ in range(num_residual):
-                layers.append(Residual(conv_channels, use_1x1conv = use_1x1conv))
+            layers.append(Residual(conv_channels, dimension_expansion, use_1x1conv = True, first_stride = stride))
+            
+            for _ in range(num_residual - 1):
+                layers.append(Residual(conv_channels, dimension_expansion))
 
             return nn.Sequential(*layers)
 
@@ -64,31 +75,31 @@ class ResNet(nn.Module):
         match model_config.num_layers:
             case 18:
                 self.net = nn.Sequential(
-                    residual_block(2, 64),
+                    residual_block(2, 64, stride = 1),
                     residual_block(2, 128),
                     residual_block(2, 256),
                     residual_block(2, 512)
                 )
             case 34:
                 self.net = nn.Sequential(
-                    residual_block(3, 64),
+                    residual_block(3, 64, stride = 1),
                     residual_block(4, 128),
                     residual_block(6, 256),
                     residual_block(3, 512)
                 )
             case 50:
                 self.net = nn.Sequential(
-                    residual_block(3, 64, use_1x1conv = True),
-                    residual_block(4, 128, use_1x1conv = True),
-                    residual_block(6, 256, use_1x1conv = True),
-                    residual_block(3, 512, use_1x1conv = True)
+                    residual_block(3, 64, dimension_expansion = True, stride = 1),
+                    residual_block(4, 128, dimension_expansion = True),
+                    residual_block(6, 256, dimension_expansion = True),
+                    residual_block(3, 512, dimension_expansion = True)
                 )
             case 101:
                 self.net = nn.Sequential(
-                    residual_block(3,64, use_1x1conv = True),
-                    residual_block(4,128, use_1x1conv = True),
-                    residual_block(23,256, use_1x1conv = True),
-                    residual_block(3,512, use_1x1conv = True)
+                    residual_block(3,64, dimension_expansion = True, stride = 1),
+                    residual_block(4,128, dimension_expansion = True),
+                    residual_block(23,256, dimension_expansion = True),
+                    residual_block(3,512, dimension_expansion = True)
                 )
         
         self.end = nn.Sequential(
@@ -106,7 +117,7 @@ class ResNet(nn.Module):
 
 
 def main():
-    model_config = ModelConfig(num_classes = 20, num_layers = 50)
+    model_config = ModelConfig(num_classes = 20, num_layers = 18)
     model = ResNet(model_config)
     model.to('cuda')
 
