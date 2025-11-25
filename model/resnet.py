@@ -5,7 +5,7 @@
 from torch import nn
 from torchsummary import summary
 
-from utils import ModelConfig
+from .utils import ModelConfig
 
 class Residual(nn.Module):
     
@@ -66,9 +66,9 @@ class ResNet(nn.Module):
             return nn.Sequential(*layers)
 
         self.start = nn.Sequential(
-            nn.LazyConv2d(64, kernel_size = 7, stride = 2),
+            nn.LazyConv2d(64, kernel_size = 3, stride = 1) if model_config.small_dataset else nn.LazyConv2d(64, kernel_size = 7, stride = 2),
             nn.LazyBatchNorm2d(),
-            nn.MaxPool2d(3, stride = 2)
+            nn.Identity() if model_config.small_dataset else nn.MaxPool2d(3, stride = 2)
         )
 
 

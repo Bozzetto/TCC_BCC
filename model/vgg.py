@@ -6,7 +6,7 @@
 from torch import nn
 from torchsummary import summary
 
-from utils import ModelConfig
+from .utils import ModelConfig
 
 class VGG(nn.Module):
 

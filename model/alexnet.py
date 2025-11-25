@@ -6,7 +6,7 @@
 from torch import nn
 from torchsummary import summary
 
-from utils import ModelConfig
+from .utils import ModelConfig
 
 class AlexNet(nn.Module):
 
@@ -15,7 +15,7 @@ class AlexNet(nn.Module):
 
         self.net = nn.Sequential(
             #Convblock 1
-            nn.LazyConv2d(96, kernel_size = 11, stride = 4, padding = 1),
+            nn.LazyConv2d(96, kernel_size = 5, stride = 1, padding = 1) if model_config.small_dataset else nn.LazyConv2d(96, kernel_size = 11, stride = 4, padding = 1),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size = 3, stride = 2),
             #Convblock 2
