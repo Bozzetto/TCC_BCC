@@ -43,7 +43,7 @@ class Residual(nn.Module):
                 nn.LazyBatchNorm2d()
             )
         else:
-            self.residual_conn = lambda x : x
+            self.residual_conn = nn.Identity()
 
     def forward(self, x):
         y = self.direct_conn(x)

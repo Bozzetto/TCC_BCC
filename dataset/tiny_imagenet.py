@@ -26,9 +26,9 @@ class TinyImageNet():
         self.train_set = datasets.ImageFolder(path + '/train', TRAIN_TRANSFORM)
         self.val_set = datasets.ImageFolder(path + '/val', VAL_TRANSFORM)
 
-    def get_dataloaders(self, batch_size = 128, num_workers = 4):
-        trainloader = DataLoader(self.train_set, batch_size = batch_size, shuffle = True, num_workers = num_workers)
-        valloader = DataLoader(self.val_set, batch_size = batch_size, shuffle = False, num_workers = num_workers)
+    def get_dataloaders(self, batch_size = 128, num_workers = 8):
+        trainloader = DataLoader(self.train_set, batch_size = batch_size, shuffle = True, num_workers = num_workers, pin_memory = True)
+        valloader = DataLoader(self.val_set, batch_size = batch_size, shuffle = False, num_workers = num_workers, pin_memory = True)
 
         return trainloader, valloader
 
