@@ -62,6 +62,16 @@
     <a href="#contato">Contato</a>
   </nav>
 
+  <section id="informacoes">
+    <h2>Informações Gerais</h2>
+    <ul>
+      <li>Nome: Leonardo Bozzetto</li>
+      <li>Orientador: Roberto Hirata Júnior</li>
+      <li>Titulo do Trabalho: Precisão Numérica como Estratégia de Otimização: Um Estudo sobre Treinamento de Redes Neurais Profundas</li>
+      <li>Monografia: <a href="https://drive.google.com/drive/u/0/folders/17vHcsADQxOJvenbJN013dsGlrr3fcXk_">Download</a></li>
+    </ul>
+  </section>
+
   <section id="resumo">
     <h2>Resumo</h2>
     <p>Este trabalho investiga como diferentes representações numéricas podem influenciar o desempenho no treinamento de modelos de redes neurais profundas.</p>
@@ -72,14 +82,15 @@
     <h2>Objetivos</h2>
     <ul>
         <li>Implementar técnicas de treinamento de redes neurais com precisão mista.</li> 
-	<li>Mensurar o impacto dessas técnicas na performance computacional.</li>
+	<li>Mensurar o impacto dessas técnicas na performance computacional.</li> 
+	<li>Comparar o desempenho entre diferentes frameworks e códigos-fonte.</li> 
 	<li>Analisar o comportamento das métricas de erro com uso de precisão meia.</li>
     </ul>
   </section>
 
   <section id="metodologia">
     <h2>Metodologia</h2>
-    <p>A metodologia deste trabalho combina experimentação prática e análise comparativa para investigar os efeitos do uso de diferentes níveis de precisão numérica no treinamento de modelos de redes neurais profundas. O estudo será conduzido com modelos representativos de tarefas de classificação e geração, treinados sob três configurações distintas: meia precisão (FP16), precisão mista (FP16 + FP32), bfloat16(bf16) e precisão simples (FP32).</p>
+    <p>A metodologia deste trabalho combina experimentação prática e análise comparativa para investigar os efeitos do uso de diferentes níveis de precisão numérica no treinamento de modelos de redes neurais profundas. O estudo será conduzido com modelos representativos de tarefas de classificação e geração, treinados sob três configurações distintas: meia precisão (FP16), precisão mista (FP16 + FP32) e precisão simples (FP32).</p>
 
     <p>Os experimentos serão realizados em ambiente controlado, utilizando ferramentas de aprendizado profundo compatíveis com diferentes níveis de precisão, e aproveitando aceleração por hardware quando disponível. Caso o tempo permita, pretende-se ainda realizar testes em plataformas alternativas de execução para verificar eventuais variações.</p>
 
@@ -92,7 +103,9 @@
     <h2>Resultados Esperados</h2>
     <p>Espera-se que o uso de precisões reduzidas, como a meia precisão e a precisão mista, resulte em uma diminuição significativa do consumo de memória e do tempo de treinamento dos modelos, quando comparadas à precisão simples. Acredita-se que, especialmente no caso da precisão mista, esses ganhos de eficiência possam ser obtidos sem perdas relevantes na acurácia dos modelos, mantendo a qualidade do aprendizado próxima ao padrão tradicional.</p>
 
-    <p>Além disso, espera-se observar que o impacto dessas técnicas varia de acordo com a arquitetura do modelo e a tarefa envolvida. </p>
+    <p>Além disso, espera-se observar que o impacto dessas técnicas varia de acordo com a arquitetura do modelo e a tarefa envolvida. Modelos mais complexos ou sensíveis numericamente, como os de geração adversária (GANs), podem ser mais afetados pela redução de precisão, enquanto modelos mais estáveis, como os de classificação, tendem a manter o desempenho mesmo com precisões menores.</p>
+
+    <p>Outro resultado esperado é a identificação de quais frameworks e implementações oferecem melhor suporte e estabilidade para o uso de diferentes precisões, contribuindo para orientar futuras aplicações práticas dessas técnicas.</p>
 
     <p>Por fim, espera-se que os resultados confirmem a viabilidade do uso de precisão reduzida como uma estratégia eficiente para otimizar o treinamento de redes neurais em ambientes com recursos limitados, como GPUs com menor capacidade de memória ou sistemas embarcados.</p>
   </section>
